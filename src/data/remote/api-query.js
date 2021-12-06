@@ -1,13 +1,15 @@
-import { gql } from 'apollo-boost'
+import { gql } from '@apollo/client'
 
 const APIQuery = {
   getPokemonList(count) { 
     return gql`
       query getAllPokemon {
         pokemons(limit: ${count}) {
-          id
-          name
-          image
+          results {
+            id
+            name
+            image
+          }
         }
       }`
   },
