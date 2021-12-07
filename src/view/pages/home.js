@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <Navbar title={'Pokepedia'} />
+      <Navbar title={'Pokepedia'} showSavedIcon />
       <p className="page-title">{'Popular Pokemon'}</p>
       <PokemonList pokemons={data?.pokemons?.results} />
     </div>

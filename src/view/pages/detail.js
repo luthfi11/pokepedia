@@ -15,23 +15,28 @@ const DetailPokemon = () => {
   const { pokemon } = data || {}
   const { add } = useIndexedDB('pokemon')
 
-  const savePokemon = async (pokemon) => {
-    try {
-      const { name, image } = pokemon
-      const saveData = {
-        nickName: name,
-        image
-      }
-      await add(saveData)
-    } catch(exception) {
-      console.log(exception)
+  const catchPokemon = () => {
+    const isSuccess = lodash.sample([true, false])
+    if (isSuccess) {
+      savePokemon(pokemon)
+    } else {
+      console.log('failed')
     }
   }
 
-  if (loading) return <Loading />
-  if (error) return <p>Failed to fetch data</p>
-
-  window.scrollTo(0, 0);
+  const savePokemon = () => {
+    const saveData = {
+      nickName: pokemon?.name,
+      image: location?.state?.image
+    }
+    add(saveData)
+      .then(() => {
+        console.log('success')
+      })
+      .catch((ex) => {
+        console.log(ex)
+      })
+  }
 
   const setNumberColor = (stat) => {
     let style = 'stat-text '
@@ -45,9 +50,14 @@ const DetailPokemon = () => {
     return style
   }
 
+  window.scrollTo(0, 0);
+
+  if (loading) return <Loading />
+  if (error) return <p>Failed to fetch data</p>
+
   return (
     <div className="container">
-      <Navbar title={'Pokemon Detail'} showBackButton={true} />
+      <Navbar title={'Pokemon Detail'} showBackButton showSavedIcon />
       <div className="img-container">
         <img src={location?.state?.image} alt={pokemon?.name} className="img-detail" />
       </div>
@@ -60,7 +70,7 @@ const DetailPokemon = () => {
         </div>
 
         <div>
-          <b>Stats</b>
+          <b>{'Stats'}</b>
           <div className="stat-container">
             {pokemon?.stats?.map((item, index) => (
               <div className="row-container space-between bottom-border" key={`${index}`}>
@@ -72,7 +82,7 @@ const DetailPokemon = () => {
         </div>
 
         <div>
-          <b>Types</b>
+          <b>{'Types'}</b>
           <ul className="bubble-list">
             {pokemon?.types?.map((item, index) => (
               <li className="bubble-item green-bg" key={`${index}`}>
@@ -83,7 +93,7 @@ const DetailPokemon = () => {
         </div>
 
         <div>
-          <b>Moves</b>
+          <b>{'Moves'}</b>
           <ul className="bubble-list">
             {pokemon?.moves?.map((item, index) => (
               <li className="bubble-item blue-bg" key={`${index}`}>
@@ -95,7 +105,7 @@ const DetailPokemon = () => {
       </div>
 
       <div className="button-container">
-        <button className="catch-button">Catch Now</button>
+        <button className="catch-button" onClick={catchPokemon}>{'Catch Now'}</button>
       </div>
     </div>
   )

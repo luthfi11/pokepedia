@@ -8,6 +8,11 @@ nav {
   width: 100%;
   top: 0;
   overflow: hidden;
+  justify-content: space-between;
+}
+
+.nav-wrapper {
+  display: flex;
 }
 
 .navbar-brand {
@@ -27,4 +32,22 @@ nav {
   width: 22px;
   height: 22px;
   object-fit: contain;
+}
+
+.star-button {
+  background: none;
+  border: 0;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 6px;
+}
+
+.star-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.back-button:hover, .star-button:hover {
+  cursor: pointer;
 }
