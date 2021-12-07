@@ -8,7 +8,7 @@ const APIQuery = {
           results {
             id
             name
-            image
+            dreamworld
           }
         }
       }`
@@ -32,6 +32,12 @@ const APIQuery = {
           }
           weight
           height
+          stats {
+            base_stat
+            stat {
+              name
+            }
+          }
         }
       }`
   }
