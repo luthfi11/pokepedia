@@ -72,6 +72,10 @@
   color: #FFAB00;
 }
 
+.stat-gray {
+  color: #999999;
+}
+
 .gray-text {
   color: #777777;
   margin: 0;
@@ -133,6 +137,6 @@
 }
 
 .catch-button:hover {
-  background: #33691E;
+  background: #2d5e19;
   cursor: pointer;
 }

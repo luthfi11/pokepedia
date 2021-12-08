@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import APIQuery from '../../data/remote/api-query'
@@ -7,6 +7,9 @@ import Navbar from '../components/navbar'
 import lodash from 'lodash'
 import '../../styles/detail.css'
 import { useIndexedDB } from 'react-indexed-db'
+import SuccessModal from '../components/success-modal'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DetailPokemon = () => {
   const location = useLocation()
@@ -14,27 +17,40 @@ const DetailPokemon = () => {
   const { loading, error, data } = useQuery(APIQuery.getPokemonDetail(name))
   const { pokemon } = data || {}
   const { add } = useIndexedDB('pokemon')
+  const [successModalOpen, setSuccessModalOpen] = useState(false)
+  const [nickname, setNickname] = useState('')
+
+  const toastConfig = {
+    position: "bottom-center",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true
+  }
 
   const catchPokemon = () => {
     const isSuccess = lodash.sample([true, false])
     if (isSuccess) {
-      savePokemon(pokemon)
+      setSuccessModalOpen(true)
     } else {
-      console.log('failed')
+      toast.info('Pokemon failed to catch! Don\'t give up, let\'s try again.', toastConfig)
     }
   }
 
   const savePokemon = () => {
     const saveData = {
-      nickName: pokemon?.name,
+      nickName: nickname,
       image: location?.state?.image
     }
     add(saveData)
       .then(() => {
-        console.log('success')
+        toast.success('Pokemon saved successfully!', toastConfig)
+        setSuccessModalOpen(false)
+        setNickname('')
       })
       .catch((ex) => {
-        console.log(ex)
+        toast.error('Nickname already used. You can use another name.', toastConfig)
       })
   }
 
@@ -46,6 +62,8 @@ const DetailPokemon = () => {
       style += 'stat-green'
     } else if (stat >= 81) {
       style += 'stat-blue'
+    } else {
+      style += 'stat-gray'
     }
     return style
   }
@@ -107,6 +125,16 @@ const DetailPokemon = () => {
       <div className="button-container">
         <button className="catch-button" onClick={catchPokemon}>{'Catch Now'}</button>
       </div>
+
+      {successModalOpen &&
+        <SuccessModal
+          textValue={nickname}
+          onTextChange={(event) => setNickname(event.target.value)}
+          onSave={savePokemon}
+          onDismiss={() => setSuccessModalOpen(false)}
+        />
+      }
+      <ToastContainer />
     </div>
   )
 }

@@ -15,7 +15,7 @@ const PokemonList = ({ pokemons, isSaved }) => {
     return (
       <div className="flat-list">
         {pokemons.map((data) => (
-          <div className="list-container">
+          <div className="list-container" key={`${data.id}`}>
             <img className="flat-img" src={data?.image} alt={data?.name} />
             <p className="card-title">{lodash.capitalize(data?.nickName)}</p>
           </div>
