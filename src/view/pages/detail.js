@@ -8,8 +8,9 @@ import lodash from 'lodash'
 import '../../styles/detail.css'
 import { useIndexedDB } from 'react-indexed-db'
 import SuccessModal from '../components/success-modal'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { TOAST_CONFIG } from '../../util/toast'
 
 const DetailPokemon = () => {
   const location = useLocation()
@@ -20,37 +21,29 @@ const DetailPokemon = () => {
   const [successModalOpen, setSuccessModalOpen] = useState(false)
   const [nickname, setNickname] = useState('')
 
-  const toastConfig = {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true
-  }
-
   const catchPokemon = () => {
     const isSuccess = lodash.sample([true, false])
     if (isSuccess) {
       setSuccessModalOpen(true)
     } else {
-      toast.info('Pokemon failed to catch! Don\'t give up, let\'s try again.', toastConfig)
+      toast.info('Pokemon failed to catch! Don\'t give up, let\'s try again.', TOAST_CONFIG)
     }
   }
 
   const savePokemon = () => {
     const saveData = {
       nickName: nickname,
-      image: location?.state?.image
+      image: location?.state?.image,
+      pokemonId: pokemon?.id
     }
     add(saveData)
       .then(() => {
-        toast.success('Pokemon saved successfully!', toastConfig)
+        toast.success('Pokemon saved successfully!', TOAST_CONFIG)
         setSuccessModalOpen(false)
         setNickname('')
       })
       .catch((ex) => {
-        toast.error('Nickname already used. You can use another name.', toastConfig)
+        toast.error('Nickname already used. You can use another name.', TOAST_CONFIG)
       })
   }
 
@@ -123,7 +116,7 @@ const DetailPokemon = () => {
       </div>
 
       <div className="button-container">
-        <button className="catch-button" onClick={catchPokemon}>{'Catch Now'}</button>
+        <button className="catch-button" onClick={catchPokemon} disabled={successModalOpen}>{'Catch Now'}</button>
       </div>
 
       {successModalOpen &&

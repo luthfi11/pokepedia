@@ -2,8 +2,9 @@ import React from 'react'
 import lodash from 'lodash'
 import { useNavigate } from 'react-router-dom'
 import '../../styles/pokemon-list.css'
+import remove from '../../img/remove.png'
 
-const PokemonList = ({ pokemons, isSaved }) => {
+const PokemonList = ({ pokemons, isSaved, removeAction }) => {
   const navigate = useNavigate()
 
   const goToDetail = (pokemon) => {
@@ -16,8 +17,13 @@ const PokemonList = ({ pokemons, isSaved }) => {
       <div className="flat-list">
         {pokemons.map((data) => (
           <div className="list-container" key={`${data.id}`}>
-            <img className="flat-img" src={data?.image} alt={data?.name} />
-            <p className="card-title">{lodash.capitalize(data?.nickName)}</p>
+            <div className="row-item">
+              <img className="flat-img" src={data?.image} alt={data?.name} />
+              <p className="card-title">{lodash.capitalize(data?.nickName)}</p>
+            </div>
+            <button className="remove-button" onClick={() => removeAction(data.id)}>
+              <img src={remove} alt={'Remove button'} className="remove-icon"/>
+            </button>
           </div>
         ))}
       </div>
@@ -32,6 +38,10 @@ const PokemonList = ({ pokemons, isSaved }) => {
             </div>
             <div className="card-body">
               <p className="card-title">{lodash.capitalize(data?.name)}</p>
+              {data.owned
+                ? <b>{`${data.owned} owned`}</b>
+                : <i className="muted-text">{'Not owned yet'}</i>
+              }
             </div>
           </button>
         ))}
