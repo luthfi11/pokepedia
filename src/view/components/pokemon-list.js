@@ -19,7 +19,7 @@ const PokemonList = ({ pokemons, isSaved, removeAction }) => {
           <div className="list-container" key={`${data.id}`}>
             <div className="row-item">
               <img className="flat-img" src={data?.image} alt={data?.name} />
-              <p className="card-title">{lodash.capitalize(data?.nickName)}</p>
+              <p className="card-title">{data?.nickName}</p>
             </div>
             <button className="remove-button" onClick={() => removeAction(data.id)}>
               <img src={remove} alt={'Remove button'} className="remove-icon"/>
