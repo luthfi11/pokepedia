@@ -34,7 +34,7 @@ const PokemonList = ({ pokemons, isSaved, removeAction }) => {
         {pokemons.map((data) => (
           <button onClick={() => goToDetail(data)} className="card" key={`${data.id}`}>
             <div>
-              <img className="card-img" src={data?.dreamworld} alt={data?.name} />
+              <img className="card-img" src={data?.dreamworld} alt={data?.name} loading="lazy" />
             </div>
             <div className="card-body">
               <p className="card-title">{lodash.capitalize(data?.name)}</p>
