@@ -11,6 +11,7 @@ import SuccessModal from '../components/success-modal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TOAST_CONFIG } from '../../util/toast'
+import Failed from '../components/failed'
 
 const DetailPokemon = () => {
   const location = useLocation()
@@ -64,70 +65,75 @@ const DetailPokemon = () => {
   window.scrollTo(0, 0);
 
   if (loading) return <Loading />
-  if (error) return <p>Failed to fetch data</p>
 
   return (
     <div className="container">
       <Navbar title={'Pokemon Detail'} showBackButton showSavedIcon />
-      <div className="img-container">
-        <img src={location?.state?.image} alt={pokemon?.name} className="img-detail" />
-      </div>
-      <div className="content">
-        <h1 className="pokemon-name">{lodash.capitalize(pokemon?.name)}</h1>
-        <div className="row-container">
-          <p className="mini-info">Height : <b>{pokemon?.height / 10} m</b></p>
-          <span className="separator">|</span>
-          <p className="mini-info">Weight : <b>{pokemon?.weight / 10} kg</b></p>
-        </div>
-
-        <div>
-          <b>{'Stats'}</b>
-          <div className="stat-container">
-            {pokemon?.stats?.map((item, index) => (
-              <div className="row-container space-between bottom-border" key={`${index}`}>
-                <p className="gray-text">{lodash.capitalize(item?.stat?.name)}</p>
-                <b className={setNumberColor(item?.base_stat)}>{item?.base_stat}</b>
-              </div>
-            ))}
+      {error ?
+        <Failed />
+      :
+        <>
+          <div className="img-container">
+            <img src={location?.state?.image} alt={pokemon?.name} className="img-detail" />
           </div>
-        </div>
+          <div className="content">
+            <h1 className="pokemon-name">{lodash.capitalize(pokemon?.name)}</h1>
+            <div className="row-container">
+              <p className="mini-info">Height : <b>{pokemon?.height / 10} m</b></p>
+              <span className="separator">|</span>
+              <p className="mini-info">Weight : <b>{pokemon?.weight / 10} kg</b></p>
+            </div>
 
-        <div>
-          <b>{'Types'}</b>
-          <ul className="bubble-list">
-            {pokemon?.types?.map((item, index) => (
-              <li className="bubble-item green-bg" key={`${index}`}>
-                <p className="green-text">{lodash.capitalize(item?.type?.name)}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+            <div>
+              <b>{'Stats'}</b>
+              <div className="stat-container">
+                {pokemon?.stats?.map((item, index) => (
+                  <div className="row-container space-between bottom-border" key={`${index}`}>
+                    <p className="gray-text">{lodash.capitalize(item?.stat?.name)}</p>
+                    <b className={setNumberColor(item?.base_stat)}>{item?.base_stat}</b>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        <div>
-          <b>{'Moves'}</b>
-          <ul className="bubble-list">
-            {pokemon?.moves?.map((item, index) => (
-              <li className="bubble-item blue-bg" key={`${index}`}>
-                <p className="blue-text">{lodash.capitalize(item?.move?.name)}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+            <div>
+              <b>{'Types'}</b>
+              <ul className="bubble-list">
+                {pokemon?.types?.map((item, index) => (
+                  <li className="bubble-item green-bg" key={`${index}`}>
+                    <p className="green-text">{lodash.capitalize(item?.type?.name)}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-      <div className="button-container">
-        <button className="catch-button" onClick={catchPokemon} disabled={successModalOpen}>{'Catch Now'}</button>
-      </div>
+            <div>
+              <b>{'Moves'}</b>
+              <ul className="bubble-list">
+                {pokemon?.moves?.map((item, index) => (
+                  <li className="bubble-item blue-bg" key={`${index}`}>
+                    <p className="blue-text">{lodash.capitalize(item?.move?.name)}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-      {successModalOpen &&
-        <SuccessModal
-          textValue={nickname}
-          onTextChange={(event) => setNickname(event.target.value)}
-          onSave={savePokemon}
-          onDismiss={() => setSuccessModalOpen(false)}
-        />
+          <div className="button-container">
+            <button className="catch-button" onClick={catchPokemon} disabled={successModalOpen}>{'Catch Now'}</button>
+          </div>
+
+          {successModalOpen &&
+            <SuccessModal
+              textValue={nickname}
+              onTextChange={(event) => setNickname(event.target.value)}
+              onSave={savePokemon}
+              onDismiss={() => setSuccessModalOpen(false)}
+            />
+          }
+          <ToastContainer />
+        </>
       }
-      <ToastContainer />
     </div>
   )
 }

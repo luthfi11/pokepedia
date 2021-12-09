@@ -5,6 +5,7 @@ import APIQuery from '../../data/remote/api-query'
 import Navbar from '../components/navbar'
 import Loading from '../components/loading'
 import { useIndexedDB } from 'react-indexed-db'
+import Failed from '../components/failed'
 
 const Home = () => {
   const { loading, error, data } = useQuery(APIQuery.getPokemonList(50))
@@ -34,13 +35,17 @@ const Home = () => {
   }, [data?.pokemons?.results])
 
   if (loading) return <Loading />
-  if (error) return <p>Failed to fetch data</p>
 
   return (
     <div className="container">
       <Navbar title={'Pokepedia'} showSavedIcon />
-      <p className="page-title">{'Popular Pokemon'}</p>
-      <PokemonList pokemons={pokemons} />
+      {error ?
+        <Failed />
+      :
+        <div>
+          <p className="page-title">{'Popular Pokemon'}</p>
+          <PokemonList pokemons={pokemons} />
+        </div>}
     </div>
   )
 }
