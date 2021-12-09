@@ -19,5 +19,7 @@ a {
 @media screen and (min-width: 1000px) {
   .page-title {
     margin-left: 8%;
+    margin-top: 100px;
+    margin-bottom: 22px;
   }
 }
