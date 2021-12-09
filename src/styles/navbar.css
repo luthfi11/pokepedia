@@ -25,7 +25,6 @@ nav {
   background: none;
   border: 0;
   margin-left: 16px;
-  margin-top: 4px;
 }
 
 .back-icon {
@@ -39,7 +38,6 @@ nav {
   border: 0;
   margin-left: 16px;
   margin-right: 16px;
-  margin-top: 6px;
 }
 
 .star-icon {
@@ -50,4 +48,23 @@ nav {
 
 .back-button:hover, .star-button:hover {
   cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .nav-wrapper {
+    margin-left: 8%;
+  }
+  
+  .navbar-brand {
+    margin-left: 0;
+  }
+
+  .back-button {
+    margin-left: 0;
+    margin-right: 16px;
+  }
+
+  .star-button {
+    margin-right: 8%;
+  }
 }

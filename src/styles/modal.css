@@ -61,6 +61,7 @@
 
 .save-button:disabled {
   background: #b1e29d;
+  cursor: not-allowed;
 }
 
 .dismiss-button {
@@ -79,4 +80,10 @@
 .dismiss-button:hover {
   background: #DDDDDD;
   cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .modal-card {
+    width: 60%;
+  }
 }

@@ -3,10 +3,15 @@
   padding-top: 30px;
   padding-bottom: 30px;
   margin-top: 70px;
+  display: flex;
+  align-items: center;
+  height: 300px;
 }
 
 .img-detail {
   width: 60%;
+  max-height: 260px;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
 }
@@ -19,7 +24,7 @@
 
 .pokemon-name {
   font-weight: 600;
-  margin-top: 5px;
+  margin-top: 16px;
   margin-bottom: 5px;
 }
 
@@ -139,4 +144,24 @@
 .catch-button:hover {
   background: #2d5e19;
   cursor: pointer;
+}
+
+@media screen and (min-width: 1000px) {
+  .content {
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-bottom: 0;
+  }
+
+  .button-container {
+    width: 100%;
+    position: initial;
+    background: none;
+    box-shadow: none;
+    justify-content: center;
+  }
+  
+  .catch-button {
+    width: 350px;
+  }
 }
